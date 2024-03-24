@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'ia-writer-quattro';
+    src: url('assets/iAWriterQuattroS-Regular.woff2') format('woff2');
+}
+
+body,
+html {
+    font-family: 'ia-writer-quattro';
+    height: 100%;
+    margin: 0;
+}
+
+#letter {
+    max-width: 60vw;
+    margin: 0 auto;
+    padding: 5vh;
+}
+
+span {
+    cursor: crosshair;
+}
