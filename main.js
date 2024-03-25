@@ -40,7 +40,7 @@ let imgs = [
 
 let unfoldings = [
     'and it immediately reminded me of the <span class="p" onclick="showCircle(1)">Wheel of Life</span> we saw at the Rubin;',
-    " both representing chance, destiny, and the laws of nature<span class='p' onclick='endParagraph()'>... ⚘</span></p>",
+    " both representing chance, destiny, seasons, and the laws of nature<span class='p' onclick='endParagraph()'>... ⚘</span></p>",
     " situated in the inexorable forward motion of time. And just like how life is always <span onclick='showCircle(3)')>full of oppositions</span>, we'll also",
     "emerge out of our stagnation and depression to more signs of warmth and hope."
 ];
@@ -56,7 +56,7 @@ let ids = ["#first", "#seconds"]
 let wordsShown = Array.from({ length: 10 }).fill(false);
 
 bg = [
-    "sun.jpeg",
+    "weather-project.jpeg",
     "moon.jpeg",
     "sky.jpeg",
     "sun-at-noon.jpeg",
@@ -66,14 +66,16 @@ bg = [
     "night-train.jpeg",
     "sand.jpeg"
 ];
+clicks = 0;
 function reveal(i) {
     try {
+        clicks++;
         getResizedDimensions(bg[i]).then((dimensions) => {
             // Opens pop up window
             let l = getLeft();
             let t = getTop();
             i += 2;
-            window.open(`circle.html?=${i}`, '_blank', `popup,location,status,scrollbars,resizable,alwaysRaised,width=${dimensions.width},height=${dimensions.height},top=${t},left=${l}`);
+            window.open(`circle.html?=${i}`, '_blank', `popup,location,status,scrollbars,resizable,alwaysRaised,width=${dimensions.width},height=${dimensions.height},top=${t},left=${l},clicks=${clicks}`);
         })
             .catch((e) => {
                 console.error("Error: ", e);
@@ -120,8 +122,8 @@ function addElements() {
         $("#menu").append(line);
     }
 
-    let l = randomInt($(window).width() * 0.2, $(window).width() * 0.5);
-    let t = randomInt($(window).height() * 0.2, $(window).height() * 0.7);
+    let l = randomInt($(window).width() * 0.1, $(window).width() * 0.8);
+    let t = randomInt($(window).height() * 0.1, $(window).height() * 0.6);
     $('#gather').css({
         'position': 'absolute',
         'left': l + 'px',
@@ -145,14 +147,10 @@ function addElements() {
 function makeLetterBubbles() {
     let text = $("#first").text();
     let newText = '';
-    console.log(text);
-
     for (let i = 0; i < text.length; i++) {
         newText += '<b>' + text[i] + '</b>';
     }
-
     $("#first").html(newText);
-    console.log($("#first").text());
 }
 
 function endParagraph() {
@@ -202,6 +200,8 @@ function switchLetter() {
 }
 
 $(document).ready(() => {
+    alert(" 🎐 please be sure to enable popup windows 🎐 ");
+
     $("#first").on('mouseenter', 'b', function () {
         let $b = $(this);
         if (!$b.hasClass('changed')) {
