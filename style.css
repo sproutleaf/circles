@@ -11,11 +11,11 @@ html {
 }
 
 #letter {
+    position: absolute;
     max-width: 40vw;
-    margin: 0 auto;
+    left: 10vw;
     padding-top: 10vh;
     padding-bottom: 5vh;
-    border-radius: 50%;
 }
 
 .p {
@@ -23,4 +23,12 @@ html {
     background-color: aliceblue;
     cursor: crosshair;
     color: green;
+}
+
+b {
+    color: seagreen;
+}
+
+.changed {
+    color: darkseagreen;
 }

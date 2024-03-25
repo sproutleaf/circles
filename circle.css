@@ -10,8 +10,7 @@ body {
 button {
     font-family: 'ia-writer-quattro';
     padding: 2px;
-    writing-mode: vertical-rl;
-    background-color: green;
+    background-color: seagreen;
 }
 
 #words {

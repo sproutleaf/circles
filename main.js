@@ -40,7 +40,7 @@ let imgs = [
 
 let unfoldings = [
     'and it immediately reminded me of the <span class="p" onclick="showCircle(1)">Wheel of Life</span> we saw at the Rubin;',
-    " both representing chance, destiny, and the laws of nature... <span class='p' onclick='addElements()'>⚘</span></p>",
+    " both representing chance, destiny, and the laws of nature<span class='p' onclick='endParagraph()'>... ⚘</span></p>",
     " situated in the inexorable forward motion of time. And just like how life is always <span onclick='showCircle(3)')>full of oppositions</span>, we'll also",
     "emerge out of our stagnation and depression to more signs of warmth and hope."
 ];
@@ -56,32 +56,51 @@ let ids = ["#first", "#seconds"]
 let wordsShown = Array.from({ length: 10 }).fill(false);
 
 bg = [
-    "sun.jpeg"
+    "sun.jpeg",
+    "moon.jpeg",
+    "sky.jpeg",
+    "sun-at-noon.jpeg",
+    "sun.jpeg",
+    "sun-at-midnight.jpeg",
+    "touching-north.jpeg",
+    "night-train.jpeg",
+    "sand.jpeg"
 ];
 function reveal(i) {
-    console.log("bg is: ", bg[i]);
-    $("#bg").attr("src", "assets/" + bg[i]);
-    $("#bg").width(250);
+    try {
+        getResizedDimensions(bg[i]).then((dimensions) => {
+            // Opens pop up window
+            let l = getLeft();
+            let t = getTop();
+            i += 2;
+            window.open(`circle.html?=${i}`, '_blank', `popup,location,status,scrollbars,resizable,alwaysRaised,width=${dimensions.width},height=${dimensions.height},top=${t},left=${l}`);
+        })
+            .catch((e) => {
+                console.error("Error: ", e);
+            })
+    } catch (e) {
+        console.error("error occurred, ", e);
+    }
 }
 
 let elements = [
-    '<span onclick="reveal(0)">SUN</span>',
+    '<span onclick="reveal(0)" class="p">SUN</span>',
     '<br>',
-    '<span>MOON</span>',
+    '<span onclick="reveal(1)" class="p">MOON</span>',
     '<br>',
-    '<span>SKY</span>',
+    '<span onclick="reveal(2)" class="p">SKY</span>',
     '<br>',
-    '<span>DAWN</span>',
+    '<span onclick="reveal(3)" class="p">DAWN</span>',
     '<br>',
-    '<span>DUSK</span>',
+    '<span onclick="reveal(4)" class="p">DUSK</span>',
     '<br>',
-    '<span>MIDNIGHT</span>',
+    '<span onclick="reveal(5)" class="p">MIDNIGHT</span>',
     '<br>',
-    '<span>SNOW</span>',
+    '<span onclick="reveal(6)" class="p">SNOW</span>',
     '<br>',
-    '<span>STONE</span>',
+    '<span onclick="reveal(7)" class="p">STONE</span>',
     '<br>',
-    '<span>SAND</span>',
+    '<span onclick="reveal(8)" class="p">SAND</span>',
     '<br>'
 ];
 
@@ -101,7 +120,7 @@ function addElements() {
         $("#menu").append(line);
     }
 
-    let l = randomInt($(window).width() * 0.2, $(window).width() * 0.7);
+    let l = randomInt($(window).width() * 0.2, $(window).width() * 0.5);
     let t = randomInt($(window).height() * 0.2, $(window).height() * 0.7);
     $('#gather').css({
         'position': 'absolute',
@@ -121,6 +140,24 @@ function addElements() {
 
     // Add empty image tag
     $('body').append('<img src="" id="bg">');
+}
+
+function makeLetterBubbles() {
+    let text = $("#first").text();
+    let newText = '';
+    console.log(text);
+
+    for (let i = 0; i < text.length; i++) {
+        newText += '<b>' + text[i] + '</b>';
+    }
+
+    $("#first").html(newText);
+    console.log($("#first").text());
+}
+
+function endParagraph() {
+    addElements();
+    makeLetterBubbles();
 }
 
 function startNewParagraph() {
@@ -154,3 +191,36 @@ function showCircle(i) {
         console.error("error occurred, ", e);
     }
 }
+
+let circles = [
+    '¤', '°', 'º', 'ο', 'ₒ', '∘', '⍉', '⍥', '◌', '◎', '☉', '☯'
+];
+
+function switchLetter() {
+    let i = randomInt(0, circles.length - 1);
+    return circles[i];
+}
+
+$(document).ready(() => {
+    $("#first").on('mouseenter', 'b', function () {
+        let $b = $(this);
+        if (!$b.hasClass('changed')) {
+            $b.addClass('changed');
+            $b.text(switchLetter());
+            $b.css('position', 'absolute');
+            roam($b, 10000);
+        }
+    });
+
+    function roam($e, duration) {
+        let w = $(window).width();
+        let h = $(window).height();
+        let x = Math.random() * (w - $e.width());
+        let y = Math.random() * (h - $e.height());
+        let opacity = Math.random();
+
+        $e.animate({ left: x, top: y, opacity: opacity }, duration, function () {
+            roam($e, duration + 500);
+        });
+    }
+})
