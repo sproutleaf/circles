@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'ia-writer-quattro';
+    src: url('assets/iAWriterQuattroS-Regular.woff2') format('woff2');
+}
+
+body {
+    background-size: cover;
+}
+
+button {
+    font-family: 'ia-writer-quattro';
+    padding: 2px;
+    writing-mode: vertical-rl;
+    background-color: green;
+}
+
+#words {
+    font-family: 'ia-writer-quattro';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    max-width: 100vw;
+}
