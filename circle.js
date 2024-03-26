@@ -6,11 +6,9 @@ function randomInt(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-
 function wordsCycle(words, skipContemplation) {
     let iteration = window.opener.clicks;
-
-    let limit = 0.8;
+    let limit = 1;
     if (typeof skipContemplation === 'undefined') {
         let c = 0.05 * iteration;
         let contemplation = c > limit ? limit : c;
